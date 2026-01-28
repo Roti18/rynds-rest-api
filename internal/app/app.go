@@ -9,6 +9,9 @@ func New() *fiber.App {
 	// Serve Shared Assets
 	app.Static("/assets", "./docs/assets")
 
+	// Serve Data Files (JSON, etc)
+	app.Static("/data", "./docs/data")
+
 	// Serve Documentation at /docs
 	app.Static("/docs", "./docs/api")
 
