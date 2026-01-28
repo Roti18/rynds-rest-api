@@ -1,0 +1,286 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-01-28",
+  "categories": [
+    {
+      "id": "auth",
+      "name": "Authentication",
+      "description": "User authentication and session management",
+      "icon": "lock"
+    },
+    {
+      "id": "users",
+      "name": "Users",
+      "description": "User management and profile operations",
+      "icon": "users"
+    },
+    {
+      "id": "system",
+      "name": "System",
+      "description": "Health checks and system monitoring",
+      "icon": "activity"
+    }
+  ],
+  "endpoints": [
+    {
+      "id": "auth-login",
+      "category": "auth",
+      "title": "User Login",
+      "description": "Obtain a JWT session token to access protected routes.",
+      "method": "POST",
+      "endpoint": "/v1/auth/login",
+      "isPublic": true,
+      "requiresAuth": false,
+      "inputs": [
+        {
+          "name": "email",
+          "type": "string",
+          "label": "Email Address",
+          "placeholder": "user@example.com",
+          "required": true,
+          "validation": "email"
+        },
+        {
+          "name": "password",
+          "type": "password",
+          "label": "Password",
+          "placeholder": "Enter your password",
+          "required": true,
+          "minLength": 8
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+        "user": {
+          "id": 1,
+          "email": "user@example.com",
+          "name": "John Doe"
+        }
+      },
+      "errorCodes": [
+        {
+          "code": 401,
+          "message": "Invalid credentials"
+        },
+        {
+          "code": 422,
+          "message": "Validation error"
+        }
+      ],
+      "rateLimit": {
+        "requests": 5,
+        "window": "1m"
+      }
+    },
+    {
+      "id": "auth-register",
+      "category": "auth",
+      "title": "User Registration",
+      "description": "Create a new user account with email verification.",
+      "method": "POST",
+      "endpoint": "/v1/auth/register",
+      "isPublic": true,
+      "requiresAuth": false,
+      "inputs": [
+        {
+          "name": "email",
+          "type": "string",
+          "label": "Email Address",
+          "placeholder": "user@example.com",
+          "required": true,
+          "validation": "email"
+        },
+        {
+          "name": "password",
+          "type": "password",
+          "label": "Password",
+          "placeholder": "Minimum 8 characters",
+          "required": true,
+          "minLength": 8
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "label": "Full Name",
+          "placeholder": "John Doe",
+          "required": true
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "message": "Registration successful. Please check your email for verification.",
+        "userId": 42
+      },
+      "errorCodes": [
+        {
+          "code": 409,
+          "message": "Email already registered"
+        },
+        {
+          "code": 422,
+          "message": "Validation error"
+        }
+      ],
+      "rateLimit": {
+        "requests": 3,
+        "window": "1h"
+      }
+    },
+    {
+      "id": "users-list",
+      "category": "users",
+      "title": "List Users",
+      "description": "Retrieve paginated list of active users. Supports filtering and sorting.",
+      "method": "GET",
+      "endpoint": "/v1/users",
+      "isPublic": false,
+      "requiresAuth": true,
+      "inputs": [
+        {
+          "name": "page",
+          "type": "number",
+          "label": "Page Number",
+          "placeholder": "1",
+          "required": false,
+          "default": 1
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "label": "Items per Page",
+          "placeholder": "10",
+          "required": false,
+          "default": 10,
+          "max": 100
+        },
+        {
+          "name": "sort",
+          "type": "select",
+          "label": "Sort By",
+          "required": false,
+          "options": [
+            { "value": "created_at", "label": "Created Date" },
+            { "value": "name", "label": "Name" },
+            { "value": "email", "label": "Email" }
+          ],
+          "default": "created_at"
+        },
+        {
+          "name": "order",
+          "type": "select",
+          "label": "Order",
+          "required": false,
+          "options": [
+            { "value": "asc", "label": "Ascending" },
+            { "value": "desc", "label": "Descending" }
+          ],
+          "default": "desc"
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "data": [
+          {
+            "id": 1,
+            "name": "John Doe",
+            "email": "john@example.com",
+            "createdAt": "2026-01-15T10:30:00Z"
+          },
+          {
+            "id": 2,
+            "name": "Jane Smith",
+            "email": "jane@example.com",
+            "createdAt": "2026-01-20T14:22:00Z"
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 10,
+          "total": 42,
+          "totalPages": 5
+        }
+      },
+      "errorCodes": [
+        {
+          "code": 401,
+          "message": "Unauthorized - Token required"
+        },
+        {
+          "code": 403,
+          "message": "Forbidden - Insufficient permissions"
+        }
+      ],
+      "rateLimit": {
+        "requests": 100,
+        "window": "1m"
+      }
+    },
+    {
+      "id": "users-get",
+      "category": "users",
+      "title": "Get User Details",
+      "description": "Retrieve detailed information about a specific user by ID.",
+      "method": "GET",
+      "endpoint": "/v1/users/:id",
+      "isPublic": false,
+      "requiresAuth": true,
+      "inputs": [
+        {
+          "name": "id",
+          "type": "number",
+          "label": "User ID",
+          "placeholder": "1",
+          "required": true,
+          "location": "path"
+        }
+      ],
+      "responseExample": {
+        "success": true,
+        "data": {
+          "id": 1,
+          "name": "John Doe",
+          "email": "john@example.com",
+          "createdAt": "2026-01-15T10:30:00Z",
+          "updatedAt": "2026-01-28T09:15:00Z",
+          "isActive": true
+        }
+      },
+      "errorCodes": [
+        {
+          "code": 404,
+          "message": "User not found"
+        },
+        {
+          "code": 401,
+          "message": "Unauthorized"
+        }
+      ],
+      "rateLimit": {
+        "requests": 200,
+        "window": "1m"
+      }
+    },
+    {
+      "id": "health-check",
+      "category": "system",
+      "title": "Health Check",
+      "description": "Simple liveness probe for load balancers and monitoring systems.",
+      "method": "GET",
+      "endpoint": "/v1/health",
+      "isPublic": true,
+      "requiresAuth": false,
+      "inputs": [],
+      "responseExample": {
+        "status": "ok",
+        "timestamp": "2026-01-28T10:45:00Z",
+        "uptime": 3600
+      },
+      "errorCodes": [],
+      "rateLimit": {
+        "requests": 1000,
+        "window": "1m"
+      }
+    }
+  ]
+}

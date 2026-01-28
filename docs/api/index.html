@@ -346,8 +346,25 @@
             });
         });
 
+        // Auto-check endpoints on load
+        function autoCheckEndpoints() {
+            if (!apiData) return;
+            
+            apiData.endpoints.forEach(ep => {
+                if (ep.autoCheck) {
+                    // Wait a bit for DOM to be ready
+                    setTimeout(() => executeRequest(ep.id), 500);
+                }
+            });
+        }
+
         // Initialize
-        loadDocs();
+        async function init() {
+            await loadDocs();
+            autoCheckEndpoints();
+        }
+        
+        init();
     </script>
 </body>
 </html>
