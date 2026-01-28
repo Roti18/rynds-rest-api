@@ -73,7 +73,7 @@
 
     <!-- Main Content -->
     <main class="flex-1 md:ml-72 h-full overflow-y-auto bg-background scroll-smooth">
-        <div class="max-w-4xl mx-auto px-6 py-12 md:px-12 md:py-16 space-y-20">
+        <div class="max-w-4xl mx-auto px-6 py-12 pb-20 md:px-12 md:py-16 md:pb-16 space-y-20">
 
             <section id="intro" class="max-w-3xl">
                 <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-6">Introduction</h1>
@@ -156,7 +156,7 @@
             apiData.endpoints.forEach(ep => {
                 const section = document.createElement('section');
                 section.id = ep.id;
-                section.className = 'searchable-section';
+                section.className = 'searchable-section mt-20';
                 section.innerHTML = `
                     <div class="sticky top-0 bg-background/95 backdrop-blur z-20 py-4 border-b border-background mb-8">
                         <h2 class="text-2xl font-bold">${ep.title}</h2>
