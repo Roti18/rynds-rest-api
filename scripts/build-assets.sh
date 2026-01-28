@@ -6,13 +6,16 @@ mkdir -p docs/assets/css
 mkdir -p docs/assets/fonts/inter
 mkdir -p docs/assets/fonts/geist-mono
 
+echo "Cleaning old CSS files..."
+rm -f docs/assets/css/*.css
+
 echo "Building Tailwind..."
 # Try explicit path first, usually reliable in CI/Docker
 if [ -f "./node_modules/.bin/tailwindcss" ]; then
-    ./node_modules/.bin/tailwindcss -i ./src/input.css -o ./docs/assets/css/style-v2.css --minify
+    ./node_modules/.bin/tailwindcss -i ./src/input.css -o ./docs/assets/css/style.css --minify
 else
     echo "Tailwind binary not found in .bin, trying npx..."
-    npx tailwindcss -i ./src/input.css -o ./docs/assets/css/style-v2.css --minify
+    npx tailwindcss -i ./src/input.css -o ./docs/assets/css/style.css --minify
 fi
 
 echo "Copying JS libs..."
