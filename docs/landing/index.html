@@ -11,7 +11,7 @@
 
     <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-20"></div>
 
-    <main class="w-full max-w-3xl text-center space-y-12">
+    <main class="w-full max-w-3xl text-center space-y-8 md:space-y-12">
         
         <!-- Status Pill -->
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gray-800 bg-gray-900/50 backdrop-blur text-xs font-mono text-gray-400">
@@ -21,40 +21,34 @@
             </span>
             <span id="server-status">Connecting...</span>
             <span class="text-gray-700">|</span>
-            <span id="uptime">UP <span id="uptime-val">99.98%</span></span>
+            <span>LATENCY <span id="latency-val" class="text-gray-300">--</span>ms</span>
         </div>
 
         <!-- Hero -->
         <div>
-            <h1 class="text-5xl md:text-7xl font-semibold tracking-tighter mb-6 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent pb-2">
+            <h1 class="text-4xl md:text-6xl font-semibold tracking-tighter mb-5 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent pb-2">
                 Rynds Interface
             </h1>
-            <p class="text-lg text-gray-400 max-w-xl mx-auto font-light leading-relaxed">
-                Next-generation monolithic architecture designed for micro-latency environments. 
-                Deployed on minimal alpine containers.
+            <p class="text-base text-gray-400 max-w-lg mx-auto font-light leading-relaxed">
+                High-performance public API infrastructure accessible to everyone. 
+                Optimized for speed and protected by intelligent rate limiting to ensure stability.
             </p>
         </div>
 
         <!-- Buttons -->
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="/docs" class="group relative px-8 py-3 bg-white text-black font-medium rounded-full overflow-hidden transition-all hover:pr-10">
-                <span class="relative z-10">Read Documentation</span>
-                <span class="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-2 group-hover:translate-x-0">
+            <a href="/docs" class="group relative px-6 py-2.5 bg-white text-black font-medium rounded-full overflow-hidden transition-all hover:pr-8">
+                <span class="relative z-10 text-sm">Read Documentation</span>
+                <span class="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-2 group-hover:translate-x-0">
                     &rarr;
                 </span>
             </a>
-            <a href="https://github.com" class="px-8 py-3 text-gray-400 hover:text-white transition-colors font-medium">
+            <a href="https://github.com/Roti18/rynds-rest-api" class="px-6 py-2.5 text-sm text-gray-400 hover:text-white transition-colors font-medium">
                 View Source
             </a>
         </div>
         
     </main>
-
-    <footer class="fixed bottom-6 text-center w-full">
-         <div class="text-[10px] font-mono text-gray-700 uppercase tracking-[0.2em]">
-             Latency: <span id="latency-val" class="text-gray-500">--</span>ms
-         </div>
-    </footer>
 
     <script>
         const statusText = document.getElementById('server-status');
@@ -62,10 +56,6 @@
         const pingDot = document.getElementById('ping-dot');
         const latencyVal = document.getElementById('latency-val');
 
-        // Uptime Real Calc (Mocked start date)
-        const start = new Date('2026-01-20T00:00:00');
-        const now = new Date();
-        // Just static for now because we don't have persistent downtime logs
         
         async function health() {
             const s = performance.now();
