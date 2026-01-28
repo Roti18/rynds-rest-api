@@ -35,11 +35,7 @@
     </header>
 
     <!-- Sidebar -->
-    <aside id="sidebar" class="fixed inset-y-0 left-0 w-72 bg-background border-r border-border transform -translate-x-full md:translate-x-0 transition-transform duration-200 z-40 flex flex-col pt-16 md:pt-0">
-        <div class="p-5 border-b border-border flex items-center gap-3 md:hidden">
-            <span class="font-bold text-lg">Navigation</span>
-            <button type="button" onclick="toggleSidebar()" class="ml-auto" aria-label="Close Sidebar"><i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i></button>
-        </div>
+    <aside id="sidebar" class="fixed inset-y-0 left-0 w-72 bg-background border-r border-border transform -translate-x-full md:translate-x-0 transition-transform duration-200 z-40 flex flex-col pt-4 md:pt-0">
 
         <div class="p-5 hidden md:block">
             <div class="font-bold text-lg tracking-tight">
@@ -48,7 +44,7 @@
         </div>
         
         <!-- Search -->
-        <div class="px-5 mb-4">
+        <div class="px-5 mb-4 mt-8 md:mt-0">
             <div class="relative group">
                 <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-gray-500 group-focus-within:text-white transition-colors" aria-hidden="true"></i>
                 <input type="text" id="search-input" placeholder="Search documentation..." 
@@ -343,10 +339,29 @@
         const searchInput = document.getElementById('search-input');
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
+            
+            // Search in endpoint sections
             const sections = document.querySelectorAll('.searchable-section');
             sections.forEach(sec => {
                 const text = sec.innerText.toLowerCase();
                 sec.style.display = text.includes(term) ? 'block' : 'none';
+            });
+            
+            // Search in navigation items
+            const navLinks = document.querySelectorAll('#nav-container a');
+            navLinks.forEach(link => {
+                const linkText = link.innerText.toLowerCase();
+                const parentLi = link.closest('li');
+                if (parentLi) {
+                    parentLi.style.display = linkText.includes(term) ? 'block' : 'none';
+                }
+            });
+            
+            // Show/hide category sections if all items are hidden
+            const categories = document.querySelectorAll('#nav-container > div');
+            categories.forEach(cat => {
+                const visibleItems = cat.querySelectorAll('li[style="display: block;"], li:not([style])');
+                cat.style.display = (term && visibleItems.length === 0) ? 'none' : 'block';
             });
         });
 
