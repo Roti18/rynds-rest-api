@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Docs - Rynds API</title>
+    <title>Docs - rynodes.docs</title>
     <link rel="stylesheet" href="/assets/css/style.css?v=20260128">
-    <script src="/assets/js/axios.min.js"></script>
-    <script src="/assets/js/lucide.min.js"></script>
+    <script src="/assets/js/axios.min.js" defer></script>
+    <script src="/assets/js/lucide.min.js" defer></script>
     <style>
         .sidebar-scroll::-webkit-scrollbar { width: 4px; }
         .sidebar-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
@@ -28,9 +28,9 @@
 
     <!-- Mobile Header -->
     <header class="md:hidden flex items-center justify-between p-4 border-b border-border bg-background z-50">
-        <div class="font-bold text-lg tracking-tight">rynds/docs</div>
-        <button onclick="toggleSidebar()" class="p-2 text-secondary hover:text-white">
-            <i data-lucide="menu" class="w-6 h-6"></i>
+        <div class="font-bold text-lg tracking-tight">rynodes.docs</div>
+        <button type="button" onclick="toggleSidebar()" class="p-2 text-secondary hover:text-white" aria-label="Toggle Menu">
+            <i data-lucide="menu" class="w-6 h-6" aria-hidden="true"></i>
         </button>
     </header>
 
@@ -38,20 +38,20 @@
     <aside id="sidebar" class="fixed inset-y-0 left-0 w-72 bg-background border-r border-border transform -translate-x-full md:translate-x-0 transition-transform duration-200 z-40 flex flex-col pt-16 md:pt-0">
         <div class="p-5 border-b border-border flex items-center gap-3 md:hidden">
             <span class="font-bold text-lg">Navigation</span>
-            <button onclick="toggleSidebar()" class="ml-auto"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <button type="button" onclick="toggleSidebar()" class="ml-auto" aria-label="Close Sidebar"><i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i></button>
         </div>
 
         <div class="p-5 hidden md:block">
             <div class="font-bold text-lg tracking-tight flex items-center gap-2">
-                <div class="w-6 h-6 bg-white rounded-full"></div>
-                rynds/docs
+                rynodes.docs
             </div>
         </div>
         
         <!-- Search -->
         <div class="px-5 mb-4">
             <div class="relative group">
-                <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-gray-500 group-focus-within:text-white transition-colors"></i>
+                <label for="search-input" class="sr-only">Search documentation</label>
+                <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-gray-500 group-focus-within:text-white transition-colors" aria-hidden="true"></i>
                 <input type="text" id="search-input" placeholder="Search documentation..." 
                     class="w-full bg-surface border border-border rounded-md py-2 pl-9 pr-3 text-sm text-gray-300 placeholder-gray-600 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 transition-all">
             </div>
@@ -63,7 +63,7 @@
 
         <div class="p-4 border-t border-border mt-auto">
             <a href="/" class="flex items-center gap-2 text-xs text-secondary hover:text-white transition-colors justify-center">
-                <i data-lucide="arrow-left" class="w-3 h-3"></i> Back to Landing Page
+                <i data-lucide="arrow-left" class="w-3 h-3" aria-hidden="true"></i> Back to Landing Page
             </a>
         </div>
     </aside>
@@ -84,7 +84,7 @@
                 <div class="mt-8 flex gap-4">
                     <div class="bg-surface border border-border rounded-lg p-4 flex-1">
                         <div class="text-secondary text-xs uppercase font-bold mb-1">Base URL</div>
-                        <div class="font-mono text-sm">https://api.rynds.my.id/v1</div>
+                        <div class="font-mono text-sm">https://api.rynds.my.id/</div>
                     </div>
                 </div>
             </section>
@@ -137,7 +137,7 @@
                             ${endpoints.map(ep => `
                                 <li>
                                     <a href="#${ep.id}" class="block py-1.5 text-gray-400 hover:text-white transition-colors flex items-center gap-2">
-                                        <span class="w-1.5 h-1.5 rounded-full ${getMethodColor(ep.method)}"></span>
+                                        <span class="w-1.5 h-1.5 rounded-full ${getMethodColor(ep.method)}" aria-hidden="true"></span>
                                         ${ep.title}
                                     </a>
                                 </li>
@@ -177,9 +177,9 @@
                             <!-- Request Panel -->
                             <div class="p-6 space-y-4">
                                 ${renderInputs(ep)}
-                                <button onclick="executeRequest('${ep.id}')" 
+                                <button type="button" onclick="executeRequest('${ep.id}')" 
                                     class="w-full bg-white text-black font-semibold h-9 rounded text-sm hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
-                                    <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i> Send Request
+                                    <i data-lucide="play" class="w-3.5 h-3.5 fill-current" aria-hidden="true"></i> Send Request
                                 </button>
                             </div>
 
@@ -211,7 +211,7 @@
                         if (input.type === 'select') {
                             return `
                                 <div>
-                                    <label class="block text-xs font-medium text-secondary mb-1.5">${input.label}${input.required ? ' *' : ''}</label>
+                                    <label for="input-${endpoint.id}-${input.name}" class="block text-xs font-medium text-secondary mb-1.5">${input.label}${input.required ? ' *' : ''}</label>
                                     <select id="input-${endpoint.id}-${input.name}" class="w-full bg-[#1a1a1a] border border-border rounded px-3 py-2 text-sm text-white focus:ring-1 focus:ring-white focus:border-white transition-all outline-none">
                                         ${input.options.map(opt => `<option value="${opt.value}" ${opt.value === input.default ? 'selected' : ''}>${opt.label}</option>`).join('')}
                                     </select>
@@ -220,7 +220,7 @@
                         } else {
                             return `
                                 <div>
-                                    <label class="block text-xs font-medium text-secondary mb-1.5">${input.label}${input.required ? ' *' : ''}</label>
+                                    <label for="input-${endpoint.id}-${input.name}" class="block text-xs font-medium text-secondary mb-1.5">${input.label}${input.required ? ' *' : ''}</label>
                                     <input type="${input.type}" 
                                         id="input-${endpoint.id}-${input.name}" 
                                         placeholder="${input.placeholder || ''}"
@@ -240,7 +240,7 @@
             return `
                 <div class="border-t border-border p-4 bg-surface/30">
                     <div class="text-xs text-secondary flex items-center gap-2">
-                        <i data-lucide="zap" class="w-3 h-3"></i>
+                        <i data-lucide="zap" class="w-3 h-3" aria-hidden="true"></i>
                         Rate Limit: ${endpoint.rateLimit.requests} requests per ${endpoint.rateLimit.window}
                     </div>
                 </div>
@@ -294,7 +294,7 @@
 
                 // Check if response is binary (audio file)
                 if (res.headers['content-type']?.includes('audio') || res.headers['content-type']?.includes('octet-stream')) {
-                    resBox.innerHTML = `<div class="text-green-400">✓ File ready for download<br><br><a href="${url}" target="_blank" class="text-blue-400 underline hover:text-blue-300">Click here to download/play: ${url}</a></div>`;
+                    resBox.innerHTML = `<div class="text-green-400">File ready to play<br><br><a href="${url}" target="_blank" class="text-blue-400 underline hover:text-blue-300">Click here to download/play: ${url}</a></div>`;
                 } else {
                     resBox.innerText = JSON.stringify(res.data, null, 2);
                 }
@@ -364,12 +364,10 @@
         }
 
         // Initialize
-        async function init() {
+        document.addEventListener('DOMContentLoaded', async () => {
             await loadDocs();
             autoCheckEndpoints();
-        }
-        
-        init();
+        });
     </script>
 </body>
 </html>
