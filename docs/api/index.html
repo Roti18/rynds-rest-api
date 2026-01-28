@@ -47,21 +47,7 @@
         </div>
 
         <nav class="flex-1 overflow-y-auto px-5 pb-8 space-y-8 sidebar-scroll" id="nav-container">
-            <div>
-                <h3 class="text-xs font-semibold text-secondary uppercase tracking-wider mb-3">Getting Started</h3>
-                <ul class="space-y-1">
-                    <li><a href="#intro" class="block py-1.5 text-gray-400 hover:text-white transition-colors">Introduction</a></li>
-                    <li><a href="#authentication" class="block py-1.5 text-gray-400 hover:text-white transition-colors">Authentication</a></li>
-                </ul>
-            </div>
-            
-            <div>
-                <h3 class="text-xs font-semibold text-secondary uppercase tracking-wider mb-3">Core Resources</h3>
-                <ul class="space-y-1">
-                    <li><a href="#health" class="block py-1.5 text-gray-400 hover:text-white transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> Health Check</a></li>
-                    <li><a href="#users" class="block py-1.5 text-gray-400 hover:text-white transition-colors flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Users</a></li>
-                </ul>
-            </div>
+            <!-- Will be populated by JS -->
         </nav>
 
         <div class="p-4 border-t border-border mt-auto">
@@ -92,118 +78,244 @@
                 </div>
             </section>
 
-            <!-- Authentication -->
-            <section id="authentication" class="searchable-section">
-                <div class="sticky top-0 bg-background/95 backdrop-blur z-20 py-4 border-b border-background mb-8">
-                     <h2 class="text-2xl font-bold">Authentication</h2>
-                </div>
-                
-                <p class="text-secondary mb-6">Obtain a JWT session token to access protected routes.</p>
-                
-                <!-- Login Interactive -->
-                <div class="glass-panel rounded-xl overflow-hidden shadow-2xl shadow-black/50">
-                    <div class="border-b border-border bg-surface/50 p-4 flex items-center justify-between">
-                         <div class="flex items-center gap-3">
-                             <span class="bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded text-xs font-mono font-bold border border-indigo-500/30">POST</span>
-                             <span class="font-mono text-sm text-gray-300">/auth/login</span>
-                         </div>
-                         <div class="text-xs text-secondary">Public Endpoint</div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-border">
-                        <!-- Request -->
-                        <div class="p-6 space-y-4">
-                            <div class="space-y-3">
-                                <div>
-                                    <label class="block text-xs font-medium text-secondary mb-1.5">Email Address</label>
-                                    <input type="text" id="login-email" value="user@rynds.id" class="w-full bg-[#1a1a1a] border border-border rounded px-3 py-2 text-sm text-white focus:ring-1 focus:ring-white focus:border-white transition-all outline-none">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-medium text-secondary mb-1.5">Password</label>
-                                    <input type="password" id="login-pass" value="secret" class="w-full bg-[#1a1a1a] border border-border rounded px-3 py-2 text-sm text-white focus:ring-1 focus:ring-white focus:border-white transition-all outline-none">
-                                </div>
-                            </div>
-                            <button onclick="runReq('POST', '/v1/auth/login', {email: getVal('login-email'), password: getVal('login-pass')}, 'res-login')" 
-                                class="w-full bg-white text-black font-semibold h-9 rounded text-sm hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
-                                <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i> Send Request
-                            </button>
-                        </div>
-
-                        <!-- Response -->
-                        <div class="p-6 bg-[#080808] relative group">
-                            <div class="absolute top-4 right-4 text-xs font-mono text-secondary group-hover:opacity-100 opacity-50 transition-opacity" id="status-login">
-                                Ready
-                            </div>
-                            <pre id="res-login" class="font-mono text-xs text-green-400 overflow-x-auto h-40 scrollbar-hide">
-// Response body
-{}
-                            </pre>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Users Endpoint -->
-            <section id="users" class="searchable-section">
-                 <div class="sticky top-0 bg-background/95 backdrop-blur z-20 py-4 border-b border-background mb-8">
-                     <h2 class="text-2xl font-bold">List Users</h2>
-                </div>
-                <div class="glass-panel rounded-xl overflow-hidden shadow-2xl shadow-black/50">
-                    <div class="border-b border-border bg-surface/50 p-4 flex items-center gap-3">
-                        <span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded text-xs font-mono font-bold border border-emerald-500/30">GET</span>
-                        <span class="font-mono text-sm text-gray-300">/users</span>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-border">
-                        <div class="p-6 flex flex-col justify-between">
-                            <p class="text-sm text-secondary mb-6">Retrieve paginated list of active users. No parameters required for basic list.</p>
-                            <button onclick="runReq('GET', '/v1/users', null, 'res-users')" 
-                                class="w-full bg-white text-black font-semibold h-9 rounded text-sm hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
-                                <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i> Fetch Data
-                            </button>
-                        </div>
-                         <div class="p-6 bg-[#080808] relative group">
-                             <div class="absolute top-4 right-4 text-xs font-mono text-secondary group-hover:opacity-100 opacity-50 transition-opacity" id="status-users">Ready</div>
-                             <pre id="res-users" class="font-mono text-xs text-green-400 overflow-x-auto h-32 scrollbar-hide">// JSON Array</pre>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-             <!-- Health Endpoint -->
-            <section id="health" class="searchable-section">
-                <div class="sticky top-0 bg-background/95 backdrop-blur z-20 py-4 border-b border-background mb-8">
-                     <h2 class="text-2xl font-bold">Health Check</h2>
-                </div>
-                <div class="glass-panel rounded-xl overflow-hidden shadow-2xl shadow-black/50">
-                    <div class="border-b border-border bg-surface/50 p-4 flex items-center gap-3">
-                        <span class="bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded text-xs font-mono font-bold border border-blue-500/30">GET</span>
-                        <span class="font-mono text-sm text-gray-300">/health</span>
-                    </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-border">
-                        <div class="p-6 flex flex-col justify-between">
-                             <p class="text-sm text-secondary mb-6">Simple liveness probe for load balancers.</p>
-                             <button onclick="runReq('GET', '/v1/health', null, 'res-health')" 
-                                class="w-full bg-surface border border-border text-white font-semibold h-9 rounded text-sm hover:bg-border transition-colors flex items-center justify-center gap-2">
-                                <i data-lucide="activity" class="w-3.5 h-3.5"></i> Check Status
-                            </button>
-                        </div>
-                        <div class="p-6 bg-[#080808] relative group">
-                            <div class="absolute top-4 right-4 text-xs font-mono text-secondary" id="status-health">Ready</div>
-                            <pre id="res-health" class="font-mono text-xs text-green-400 overflow-x-auto h-24 scrollbar-hide">// Status Object</pre>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <!-- Dynamic Sections Container -->
+            <div id="endpoints-container">
+                <!-- Will be populated by JS -->
+            </div>
 
         </div>
     </main>
 
     <script>
-        lucide.createIcons();
-        const getVal = (id) => document.getElementById(id).value;
+        let apiData = null;
 
-        // Interactive Sidebar & Overlay
+        // Fetch and render API documentation
+        async function loadDocs() {
+            try {
+                const res = await fetch('/data/docs.json');
+                apiData = await res.json();
+                renderNavigation();
+                renderEndpoints();
+                lucide.createIcons();
+            } catch (err) {
+                console.error('Failed to load docs:', err);
+            }
+        }
+
+        // Render sidebar navigation
+        function renderNavigation() {
+            const nav = document.getElementById('nav-container');
+            
+            // Getting Started
+            nav.innerHTML = `
+                <div>
+                    <h3 class="text-xs font-semibold text-secondary uppercase tracking-wider mb-3">Getting Started</h3>
+                    <ul class="space-y-1">
+                        <li><a href="#intro" class="block py-1.5 text-gray-400 hover:text-white transition-colors">Introduction</a></li>
+                    </ul>
+                </div>
+            `;
+
+            // Categories
+            apiData.categories.forEach(cat => {
+                const endpoints = apiData.endpoints.filter(e => e.category === cat.id);
+                const catHtml = `
+                    <div>
+                        <h3 class="text-xs font-semibold text-secondary uppercase tracking-wider mb-3">${cat.name}</h3>
+                        <ul class="space-y-1">
+                            ${endpoints.map(ep => `
+                                <li>
+                                    <a href="#${ep.id}" class="block py-1.5 text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                                        <span class="w-1.5 h-1.5 rounded-full ${getMethodColor(ep.method)}"></span>
+                                        ${ep.title}
+                                    </a>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+                nav.innerHTML += catHtml;
+            });
+        }
+
+        // Render endpoint sections
+        function renderEndpoints() {
+            const container = document.getElementById('endpoints-container');
+            
+            apiData.endpoints.forEach(ep => {
+                const section = document.createElement('section');
+                section.id = ep.id;
+                section.className = 'searchable-section';
+                section.innerHTML = `
+                    <div class="sticky top-0 bg-background/95 backdrop-blur z-20 py-4 border-b border-background mb-8">
+                        <h2 class="text-2xl font-bold">${ep.title}</h2>
+                    </div>
+                    
+                    <p class="text-secondary mb-6">${ep.description}</p>
+                    
+                    <div class="glass-panel rounded-xl overflow-hidden shadow-2xl shadow-black/50">
+                        <div class="border-b border-border bg-surface/50 p-4 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <span class="${getMethodBadgeClass(ep.method)}">${ep.method}</span>
+                                <span class="font-mono text-sm text-gray-300">${ep.endpoint}</span>
+                            </div>
+                            <div class="text-xs text-secondary">${ep.isPublic ? 'Public Endpoint' : 'Protected'}</div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-border">
+                            <!-- Request Panel -->
+                            <div class="p-6 space-y-4">
+                                ${renderInputs(ep)}
+                                <button onclick="executeRequest('${ep.id}')" 
+                                    class="w-full bg-white text-black font-semibold h-9 rounded text-sm hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+                                    <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i> Send Request
+                                </button>
+                            </div>
+
+                            <!-- Response Panel -->
+                            <div class="p-6 bg-[#080808] relative group">
+                                <div class="absolute top-4 right-4 text-xs font-mono text-secondary group-hover:opacity-100 opacity-50 transition-opacity" id="status-${ep.id}">
+                                    Ready
+                                </div>
+                                <pre id="res-${ep.id}" class="font-mono text-xs text-green-400 overflow-x-auto min-h-32 scrollbar-hide">${JSON.stringify(ep.responseExample, null, 2)}</pre>
+                            </div>
+                        </div>
+                        
+                        ${renderRateLimit(ep)}
+                    </div>
+                `;
+                container.appendChild(section);
+            });
+        }
+
+        // Render input fields
+        function renderInputs(endpoint) {
+            if (!endpoint.inputs || endpoint.inputs.length === 0) {
+                return '<p class="text-sm text-secondary">No parameters required.</p>';
+            }
+
+            return `
+                <div class="space-y-3">
+                    ${endpoint.inputs.map(input => {
+                        if (input.type === 'select') {
+                            return `
+                                <div>
+                                    <label class="block text-xs font-medium text-secondary mb-1.5">${input.label}${input.required ? ' *' : ''}</label>
+                                    <select id="input-${endpoint.id}-${input.name}" class="w-full bg-[#1a1a1a] border border-border rounded px-3 py-2 text-sm text-white focus:ring-1 focus:ring-white focus:border-white transition-all outline-none">
+                                        ${input.options.map(opt => `<option value="${opt.value}" ${opt.value === input.default ? 'selected' : ''}>${opt.label}</option>`).join('')}
+                                    </select>
+                                </div>
+                            `;
+                        } else {
+                            return `
+                                <div>
+                                    <label class="block text-xs font-medium text-secondary mb-1.5">${input.label}${input.required ? ' *' : ''}</label>
+                                    <input type="${input.type}" 
+                                        id="input-${endpoint.id}-${input.name}" 
+                                        placeholder="${input.placeholder || ''}"
+                                        ${input.default ? `value="${input.default}"` : ''}
+                                        class="w-full bg-[#1a1a1a] border border-border rounded px-3 py-2 text-sm text-white focus:ring-1 focus:ring-white focus:border-white transition-all outline-none">
+                                </div>
+                            `;
+                        }
+                    }).join('')}
+                </div>
+            `;
+        }
+
+        // Render rate limit info
+        function renderRateLimit(endpoint) {
+            if (!endpoint.rateLimit) return '';
+            return `
+                <div class="border-t border-border p-4 bg-surface/30">
+                    <div class="text-xs text-secondary flex items-center gap-2">
+                        <i data-lucide="zap" class="w-3 h-3"></i>
+                        Rate Limit: ${endpoint.rateLimit.requests} requests per ${endpoint.rateLimit.window}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Execute API request
+        async function executeRequest(endpointId) {
+            const endpoint = apiData.endpoints.find(e => e.id === endpointId);
+            const resBox = document.getElementById(`res-${endpointId}`);
+            const statusBox = document.getElementById(`status-${endpointId}`);
+            
+            statusBox.innerText = 'Requesting...';
+            statusBox.className = 'absolute top-4 right-4 text-xs font-mono text-yellow-500 animate-pulse';
+
+            // Collect input values
+            const data = {};
+            let url = endpoint.endpoint;
+            
+            endpoint.inputs.forEach(input => {
+                const value = document.getElementById(`input-${endpointId}-${input.name}`)?.value;
+                if (value) {
+                    if (input.location === 'path') {
+                        url = url.replace(`:${input.name}`, value);
+                    } else {
+                        data[input.name] = input.type === 'number' ? Number(value) : value;
+                    }
+                }
+            });
+
+            try {
+                const start = Date.now();
+                const config = { 
+                    method: endpoint.method, 
+                    url, 
+                    validateStatus: () => true 
+                };
+                
+                if (endpoint.method !== 'GET' && Object.keys(data).length > 0) {
+                    config.data = data;
+                } else if (endpoint.method === 'GET' && Object.keys(data).length > 0) {
+                    config.params = data;
+                }
+
+                const res = await axios(config);
+                const ms = Date.now() - start;
+
+                const isError = res.status >= 400;
+                statusBox.innerText = `${res.status} • ${ms}ms`;
+                statusBox.className = `absolute top-4 right-4 text-xs font-mono font-bold ${isError ? 'text-red-500' : 'text-green-500'}`;
+
+                resBox.innerText = JSON.stringify(res.data, null, 2);
+                resBox.className = `font-mono text-xs overflow-x-auto min-h-32 scrollbar-hide ${isError ? 'text-red-400' : 'text-green-400'}`;
+            } catch (err) {
+                statusBox.innerText = 'NET_ERR';
+                statusBox.className = 'absolute top-4 right-4 text-xs font-mono font-bold text-red-600';
+                resBox.innerText = err.message;
+                resBox.className = 'font-mono text-xs text-red-600 overflow-x-auto min-h-32 scrollbar-hide';
+            }
+        }
+
+        // Helper: Get method color
+        function getMethodColor(method) {
+            const colors = {
+                'GET': 'bg-emerald-500',
+                'POST': 'bg-indigo-500',
+                'PUT': 'bg-yellow-500',
+                'DELETE': 'bg-red-500',
+                'PATCH': 'bg-orange-500'
+            };
+            return colors[method] || 'bg-gray-500';
+        }
+
+        // Helper: Get method badge class
+        function getMethodBadgeClass(method) {
+            const classes = {
+                'GET': 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+                'POST': 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30',
+                'PUT': 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30',
+                'DELETE': 'bg-red-500/20 text-red-300 border-red-500/30',
+                'PATCH': 'bg-orange-500/20 text-orange-300 border-orange-500/30'
+            };
+            return `${classes[method] || 'bg-gray-500/20 text-gray-300 border-gray-500/30'} px-2 py-0.5 rounded text-xs font-mono font-bold border`;
+        }
+
+        // Sidebar toggle
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
         function toggleSidebar() {
@@ -212,51 +324,19 @@
             setTimeout(() => overlay.classList.toggle('opacity-0'), 10);
         }
 
-        // Search Functionality
+        // Search functionality
         const searchInput = document.getElementById('search-input');
-        const sections = document.querySelectorAll('.searchable-section');
-
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
+            const sections = document.querySelectorAll('.searchable-section');
             sections.forEach(sec => {
                 const text = sec.innerText.toLowerCase();
-                if(text.includes(term)) {
-                    sec.style.display = 'block';
-                } else {
-                    sec.style.display = 'none';
-                }
+                sec.style.display = text.includes(term) ? 'block' : 'none';
             });
         });
 
-        // Request Runner
-        async function runReq(method, url, data, resId) {
-            const box = document.getElementById(resId);
-            const status = document.getElementById(resId.replace('res', 'status'));
-            
-            status.innerText = 'Requesting...';
-            status.className = 'absolute top-4 right-4 text-xs font-mono text-yellow-500 animate-pulse';
-
-            try {
-                const start = Date.now();
-                const config = { method, url, validateStatus: () => true }; // Allow all status codes
-                if(data) config.data = data;
-
-                const res = await axios(config);
-                const ms = Date.now() - start;
-
-                const isError = res.status >= 400;
-                status.innerText = `${res.status} ${res.statusText} • ${ms}ms`;
-                status.className = `absolute top-4 right-4 text-xs font-mono font-bold ${isError ? 'text-red-500' : 'text-green-500'}`;
-
-                box.innerText = JSON.stringify(res.data, null, 2);
-                box.className = `font-mono text-xs overflow-x-auto h-full scrollbar-hide ${isError ? 'text-red-400' : 'text-green-400'}`;
-            } catch (err) {
-                status.innerText = 'NET_ERR';
-                status.className = 'absolute top-4 right-4 text-xs font-mono font-bold text-red-600';
-                box.innerText = err.message;
-                box.className = 'font-mono text-xs text-red-600 overflow-x-auto h-full scrollbar-hide';
-            }
-        }
+        // Initialize
+        loadDocs();
     </script>
 </body>
 </html>
