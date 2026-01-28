@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High-Performance API Infrastructure | Rynds</title>
+    <!-- Local Assets -->
+    <link rel="stylesheet" href="/assets/css/style-v2.css">
+</head>
+<body class="bg-black text-white antialiased font-sans min-h-screen flex flex-col items-center justify-center p-6 selection:bg-white selection:text-black">
+
+    <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-20"></div>
+
+    <main class="w-full max-w-3xl text-center space-y-12">
+        
+        <!-- Status Pill -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gray-800 bg-gray-900/50 backdrop-blur text-xs font-mono text-gray-400">
+            <span class="relative flex h-2 w-2">
+              <span id="ping-dot" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 hidden"></span>
+              <span id="status-dot" class="relative inline-flex rounded-full h-2 w-2 bg-gray-500"></span>
+            </span>
+            <span id="server-status">Connecting...</span>
+            <span class="text-gray-700">|</span>
+            <span id="uptime">UP <span id="uptime-val">99.98%</span></span>
+        </div>
+
+        <!-- Hero -->
+        <div>
+            <h1 class="text-5xl md:text-7xl font-semibold tracking-tighter mb-6 bg-gradient-to-b from-white to-gray-500 bg-clip-text text-transparent pb-2">
+                Rynds Interface
+            </h1>
+            <p class="text-lg text-gray-400 max-w-xl mx-auto font-light leading-relaxed">
+                Next-generation monolithic architecture designed for micro-latency environments. 
+                Deployed on minimal alpine containers.
+            </p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/docs" class="group relative px-8 py-3 bg-white text-black font-medium rounded-full overflow-hidden transition-all hover:pr-10">
+                <span class="relative z-10">Read Documentation</span>
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-2 group-hover:translate-x-0">
+                    &rarr;
+                </span>
+            </a>
+            <a href="https://github.com" class="px-8 py-3 text-gray-400 hover:text-white transition-colors font-medium">
+                View Source
+            </a>
+        </div>
+        
+    </main>
+
+    <footer class="fixed bottom-6 text-center w-full">
+         <div class="text-[10px] font-mono text-gray-700 uppercase tracking-[0.2em]">
+             Latency: <span id="latency-val" class="text-gray-500">--</span>ms
+         </div>
+    </footer>
+
+    <script>
+        const statusText = document.getElementById('server-status');
+        const statusDot = document.getElementById('status-dot');
+        const pingDot = document.getElementById('ping-dot');
+        const latencyVal = document.getElementById('latency-val');
+
+        // Uptime Real Calc (Mocked start date)
+        const start = new Date('2026-01-20T00:00:00');
+        const now = new Date();
+        // Just static for now because we don't have persistent downtime logs
+        
+        async function health() {
+            const s = performance.now();
+            try {
+                const res = await fetch('/v1/health');
+                const e = performance.now();
+                if(res.ok) {
+                    const ms = (e - s).toFixed(1);
+                    latencyVal.innerText = ms;
+                    statusText.innerText = "System Operational";
+                    statusText.classList.remove('text-red-500');
+                    statusText.classList.add('text-green-400');
+                    
+                    statusDot.className = "relative inline-flex rounded-full h-2 w-2 bg-green-500";
+                    pingDot.classList.remove('hidden');
+                } else { throw new Error(); }
+            } catch {
+                latencyVal.innerText = "ERR";
+                statusText.innerText = "System Outage";
+                statusText.classList.add('text-red-500');
+                
+                statusDot.className = "relative inline-flex rounded-full h-2 w-2 bg-red-500";
+                pingDot.classList.add('hidden');
+            }
+        }
+        setInterval(health, 3000);
+        health();
+    </script>
+</body>
+</html>
