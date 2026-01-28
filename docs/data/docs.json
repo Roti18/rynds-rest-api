@@ -3,6 +3,12 @@
   "lastUpdated": "2026-01-28",
   "categories": [
     {
+      "id": "media",
+      "name": "Media",
+      "description": "Music and media file management",
+      "icon": "music"
+    },
+    {
       "id": "system",
       "name": "System",
       "description": "Health checks and system monitoring",
@@ -13,14 +19,24 @@
     {
       "id": "music-list",
       "category": "media",
-      "title": "Music List",
-      "description": "Public endpoint to retrieve a list of available audio tracks from the music library.",
+      "title": "List Music Files",
+      "description": "Retrieve a paginated list of available audio tracks from the music library.",
       "method": "GET",
       "endpoint": "/music",
       "isPublic": true,
       "requiresAuth": false,
       "autoCheck": false,
-      "inputs": [],
+      "inputs": [
+        {
+          "name": "limit",
+          "type": "number",
+          "label": "Limit",
+          "placeholder": "25",
+          "required": false,
+          "default": 25,
+          "max": 100
+        }
+      ],
       "responseExample": [
         "test.wav",
         "lofi.mp3",
@@ -34,6 +50,42 @@
       ],
       "rateLimit": {
         "requests": 300,
+        "window": "1m"
+      }
+    },
+    {
+      "id": "music-get",
+      "category": "media",
+      "title": "Get Music File",
+      "description": "Stream or download a specific audio file by name.",
+      "method": "GET",
+      "endpoint": "/music/:name",
+      "isPublic": true,
+      "requiresAuth": false,
+      "autoCheck": false,
+      "inputs": [
+        {
+          "name": "name",
+          "type": "string",
+          "label": "Music Filename",
+          "placeholder": "lofi.mp3",
+          "required": true,
+          "location": "path"
+        }
+      ],
+      "responseExample": "Binary audio stream",
+      "errorCodes": [
+        {
+          "code": 404,
+          "message": "Music file not found"
+        },
+        {
+          "code": 400,
+          "message": "Invalid filename"
+        }
+      ],
+      "rateLimit": {
+        "requests": 100,
         "window": "1m"
       }
     },
