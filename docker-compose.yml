@@ -11,6 +11,8 @@ services:
       - tunnel
     ports:
       - "3002:3002"
+    volumes:
+      - /home/roniserv/Music:/app/music:ro
 
   cloudflared:
     image: cloudflare/cloudflared:latest
