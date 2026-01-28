@@ -1,0 +1,29 @@
+
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: rynds-api
+    restart: unless-stopped
+    networks:
+      - tunnel
+    ports:
+      - "3002:3002"
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel run --url http://api:3002
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    restart: unless-stopped
+    depends_on:
+      - api
+
+    networks:
+      - tunnel
+
+networks:
+  tunnel:
+    driver: bridge
