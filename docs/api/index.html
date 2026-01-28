@@ -158,7 +158,7 @@
                 section.id = ep.id;
                 section.className = 'searchable-section';
                 section.innerHTML = `
-                    <div class="sticky top-0 bg-background/95 backdrop-blur z-20 py-4 border-b border-background mb-3 ${index > 0 ? 'mt-20' : ''}">
+                    <div class="sticky top-0 bg-background/95 backdrop-blur z-20 py-4 border-b border-background mb-3 ${index > 0 ? 'mt-32' : ''}">
                         <h2 class="text-2xl font-bold">${ep.title}</h2>
                     </div>
                     
@@ -292,7 +292,12 @@
                 statusBox.innerText = `${res.status} • ${ms}ms`;
                 statusBox.className = `absolute top-4 right-4 text-xs font-mono font-bold ${isError ? 'text-red-500' : 'text-green-500'}`;
 
-                resBox.innerText = JSON.stringify(res.data, null, 2);
+                // Check if response is binary (audio file)
+                if (res.headers['content-type']?.includes('audio') || res.headers['content-type']?.includes('octet-stream')) {
+                    resBox.innerHTML = `<div class="text-green-400">✓ File ready for download<br><br><a href="${url}" target="_blank" class="text-blue-400 underline hover:text-blue-300">Click here to download/play: ${url}</a></div>`;
+                } else {
+                    resBox.innerText = JSON.stringify(res.data, null, 2);
+                }
                 resBox.className = `font-mono text-xs overflow-x-auto min-h-32 scrollbar-hide ${isError ? 'text-red-400' : 'text-green-400'}`;
             } catch (err) {
                 statusBox.innerText = 'NET_ERR';
