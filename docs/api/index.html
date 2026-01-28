@@ -42,8 +42,7 @@
         </div>
 
         <div class="p-5 hidden md:block">
-            <div class="font-bold text-lg tracking-tight flex items-center gap-2">
-                <div class="w-6 h-6 rounded-full"></div>
+            <div class="font-bold text-lg tracking-tight">
                 rynds/docs
             </div>
         </div>
@@ -51,7 +50,6 @@
         <!-- Search -->
         <div class="px-5 mb-4">
             <div class="relative group">
-                <label for="search-input" class="sr-only">Search documentation</label>
                 <i data-lucide="search" class="absolute left-3 top-2.5 w-4 h-4 text-gray-500 group-focus-within:text-white transition-colors" aria-hidden="true"></i>
                 <input type="text" id="search-input" placeholder="Search documentation..." 
                     class="w-full bg-surface border border-border rounded-md py-2 pl-9 pr-3 text-sm text-gray-300 placeholder-gray-600 focus:outline-none focus:border-gray-500 focus:ring-1 focus:ring-gray-500 transition-all">
@@ -212,7 +210,7 @@
                         if (input.type === 'select') {
                             return `
                                 <div>
-                                    <label for="input-${endpoint.id}-${input.name}" class="block text-xs font-medium text-secondary mb-1.5">${input.label}${input.required ? ' *' : ''}</label>
+                                    <label class="block text-xs font-medium text-secondary mb-1.5">${input.label}${input.required ? ' *' : ''}</label>
                                     <select id="input-${endpoint.id}-${input.name}" class="w-full bg-[#1a1a1a] border border-border rounded px-3 py-2 text-sm text-white focus:ring-1 focus:ring-white focus:border-white transition-all outline-none">
                                         ${input.options.map(opt => `<option value="${opt.value}" ${opt.value === input.default ? 'selected' : ''}>${opt.label}</option>`).join('')}
                                     </select>
@@ -221,7 +219,7 @@
                         } else {
                             return `
                                 <div>
-                                    <label for="input-${endpoint.id}-${input.name}" class="block text-xs font-medium text-secondary mb-1.5">${input.label}${input.required ? ' *' : ''}</label>
+                                    <label class="block text-xs font-medium text-secondary mb-1.5">${input.label}${input.required ? ' *' : ''}</label>
                                     <input type="${input.type}" 
                                         id="input-${endpoint.id}-${input.name}" 
                                         placeholder="${input.placeholder || ''}"
