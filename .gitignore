@@ -1,0 +1,23 @@
+# Binaries
+/app
+/dist
+/tmp
+
+# Dependencies
+node_modules
+vendor
+
+# Environment
+.env
+
+# OS
+.DS_Store
+
+# IDE
+.vscode
+.idea
+
+# Assets build artifacts (we build these in docker, but locally we might want to ignore them if we run script locally)
+docs/assets/css
+docs/assets/js
+docs/assets/fonts
