@@ -34,7 +34,7 @@
           "placeholder": "25",
           "required": false,
           "default": 25,
-          "max": 100
+          "max": 1000
         }
       ],
       "responseExample": [
@@ -85,7 +85,7 @@
         }
       ],
       "rateLimit": {
-        "requests": 100,
+        "requests": 1000,
         "window": "1m"
       }
     },
@@ -107,7 +107,7 @@
       },
       "errorCodes": [],
       "rateLimit": {
-        "requests": 100,
+        "requests": 1000,
         "window": "1m"
       }
     }
