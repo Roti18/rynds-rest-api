@@ -60,7 +60,7 @@
         async function health() {
             const s = performance.now();
             try {
-                const res = await fetch('/v1/health');
+                const res = await fetch('/health');
                 const e = performance.now();
                 if(res.ok) {
                     const ms = (e - s).toFixed(1);

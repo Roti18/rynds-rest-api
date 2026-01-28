@@ -16,7 +16,7 @@
       "title": "Health Check",
       "description": "Simple liveness probe for load balancers and monitoring systems.",
       "method": "GET",
-      "endpoint": "/v1/health",
+      "endpoint": "/health",
       "isPublic": true,
       "requiresAuth": false,
       "autoCheck": true,
@@ -28,9 +28,36 @@
       },
       "errorCodes": [],
       "rateLimit": {
-        "requests": 1000,
+        "requests": 100,
         "window": "1m"
       }
+    },
+    {
+    "id": "music-list",
+    "category": "media",
+    "title": "Music List",
+    "description": "Public endpoint to retrieve a list of available audio tracks from the music library.",
+    "method": "GET",
+    "endpoint": "/music",
+    "isPublic": true,
+    "requiresAuth": false,
+    "autoCheck": false,
+    "inputs": [],
+    "responseExample": [
+      "test.wav",
+      "lofi.mp3",
+      "ambient.flac"
+    ],
+    "errorCodes": [
+      {
+        "code": 500,
+        "message": "Failed to read music directory"
+      }
+    ],
+    "rateLimit": {
+      "requests": 300,
+      "window": "1m"
+    }
     }
   ]
 }

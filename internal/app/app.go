@@ -12,8 +12,8 @@ func New() *fiber.App {
 	// Serve Data Files (JSON, etc)
 	app.Static("/data", "./docs/data")
 
-	// Serve Music Files
-	app.Static("/music", "./music")
+	// Serve Music Files (direct download)
+	app.Static("/music/files", "./music")
 
 	// Serve Documentation at /docs
 	app.Static("/docs", "./docs/api")
