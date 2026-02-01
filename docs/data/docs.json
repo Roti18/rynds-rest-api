@@ -90,6 +90,38 @@
       }
     },
     {
+      "id": "music-stream",
+      "category": "media",
+      "title": "Music HLS Stream",
+      "description": "Get HLS master playlist or segments for adaptive bitrate streaming. Automatically transcodes audio if needed.",
+      "method": "GET",
+      "endpoint": "/music/:name/hls/*",
+      "isPublic": true,
+      "requiresAuth": false,
+      "autoCheck": false,
+      "inputs": [
+        {
+          "name": "name",
+          "type": "string",
+          "label": "Music Filename",
+          "placeholder": "lofi.mp3",
+          "required": true,
+          "location": "path"
+        }
+      ],
+      "responseExample": "#EXTM3U\n#EXT-X-STREAM-INF:BANDWIDTH=64000\naudio_0.m3u8\n...",
+      "errorCodes": [
+        {
+          "code": 404,
+          "message": "Music file not found"
+        },
+        {
+          "code": 500,
+          "message": "Failed to generate HLS segments"
+        }
+      ]
+    },
+    {
       "id": "health-check",
       "category": "system",
       "title": "Health Check",
