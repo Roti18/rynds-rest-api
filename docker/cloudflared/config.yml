@@ -1,5 +1,0 @@
-ingress:
-  - hostname: api.rynds.my.id
-    service: http://api:3002
-  - service: http_status:404
-  - service: http_status:404
